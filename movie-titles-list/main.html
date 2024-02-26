@@ -6,8 +6,33 @@
     <script>
       //
       // TODO: Implement this function.
-      //
-      const getMovieList = () => {}
+      //         let year = 2009;
+      const getMovieList = (year) => {
+          // Use this API with the above arguement to get the list of movies...
+          const  url = `http://jsonmock.hackerrank.com/api/movies?year=${year}`; 
+
+          //console.log(url);
+          //Fetching this Api and seeing the result on console...
+          return new Promise( async (resolve, reject) => {
+            try {
+              const response = await fetch(url);
+
+              if (!response.ok){
+                throw new Error(`Error Fetching the Api. Status Code ${response.status}`);
+              }
+
+              const data = await response.json();
+              const movieTitles = data.results.map(movie => movie.title);
+              const sortedMovieTitles = movieTitles.sort();
+
+              resolve(sortedMovieTitles);
+            }
+            catch(error){
+              reject(error);
+            }
+
+          });
+      }
     </script>
   </head>
 

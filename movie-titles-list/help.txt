@@ -1,0 +1,72 @@
+function getovieList(year) {
+  // Replace this URL with the actual API endpoint for movie data
+  const apiUrl = `https://api.example.com/movies?year=${year}`;
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await fetch(apiUrl);
+
+      if (!response.ok) {
+        throw new Error(`Error fetching data from the API. Status code: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const movieTitles = data.results.map(movie => movie.title);
+      const sortedMovieTitles = movieTitles.sort();
+
+      resolve(sortedMovieTitles);
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
+
+
+
+
+function fetchMovies() {
+  return fetch('https://api.example.com/movies')
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then((data) => {
+      // Process the movie data
+      console.log(data);
+    })
+    .catch((error) => {
+      console.error('Error fetching movie data:', error);
+    });
+}
+
+
+
+      const getMovieList = (year) => {
+          // Use this API with the above arguement to get the list of movies...
+          const  url = `http://jsonmock.hackerrank.com/api/movies?year=${year}`; 
+
+          //console.log(url);
+          //Fetching this Api and seeing the result on console...
+          return new Promise( async (resolve, reject) => {
+            try {
+              const response = await fetch(url);
+
+              if (!response.ok){
+                throw new Error(`Error Fetching the Api. Status Code ${response.status}`);
+              }
+
+              const data = await response.json();
+              const movieTitles = data.results.map(movie => movie.title);
+              const sortedMovieTitles = movieTitles.sort();
+
+              resolve(sortedMovieTitles);
+            }
+            catch(error){
+              reject(error);
+            }
+
+          });
+      }
