@@ -1,0 +1,24 @@
+CODE FROM COPILOT:
+
+function makeInputVerifier(minimum, maximum) {
+    if (minimum > maximum) {
+        throw new Error("Invalid input: minimum should be less than or equal to maximum");
+    }
+
+    return function verify(inputValue) {
+        if (inputValue < minimum) {
+            return "Input is less than minimum value";
+        } else if (inputValue >= minimum && inputValue <= maximum) {
+            return "Input is in range";
+        } else {
+            return "Input is more than maximum value";
+        }
+    };
+}
+
+// Example usage:
+const verifyInput = makeInputVerifier(10, 20);
+
+console.log(verifyInput(5));    // Output: "Input is less than minimum value"
+console.log(verifyInput(15));   // Output: "Input is in range"
+console.log(verifyInput(25));   // Output: "Input is more than maximum value"

@@ -7,8 +7,28 @@
       //
       // TODO: Implement this function.
       //
-      const makeInputVerifier = () => {
-        return () => {}
+      const makeInputVerifier = (minlimit, maxlimit, inputValue) => {
+        
+        //Checking whether the limits are as taken in the arguements...
+        if (minlimit > maxlimit){
+          let errmsg = "ERROR";
+          return errmsg;
+        }
+
+        //Our 'Verify' Function...
+        return (inputValue) => {
+          let msg =  "";
+          if (inputValue < minlimit){
+            msg = "Input is less than minimum value";
+          }
+          else if (inputValue > maxlimit){
+            msg = "Input is more than maximum value";
+          }
+          else if (inputValue >= minlimit && inputValue <= maxlimit){
+            msg = "Input is in range";
+          }
+          return msg;
+        }
       }
     </script>
   </head>
