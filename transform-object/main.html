@@ -7,7 +7,58 @@
       //
       // TODO: Implement this function.
       //
-      const transformObject = () => {}
+
+      const transformObject = (obj) => {
+        
+        //Find for each value of JSON Object either a string or number...
+        Object.values(obj).forEach((val) => {
+          
+          //Check 1: If a number is found in the JSON Object...
+          if (typeof val === "number") {      
+            //Find the key with this value and update...
+            Object.keys(obj).forEach((key) => {
+              if (obj[key] == val) {
+                obj[key] = val + 6;
+              } 
+            })
+          }
+
+          //Check 2: If a string is found in the JSON Object...
+          if (typeof val === "string") {     
+            //Find the key with this value and update...
+            Object.keys(obj).forEach((key) => {
+              if (obj[key] == val) {
+                obj[key] = val + " BLARGH";
+              } 
+            })
+          }
+
+          //Check 3: If an Array is found in the JSON object...
+          if (Array.isArray(val)) {
+            // Iterating and processing the Array in the JSON Object...
+            let arr = val;
+            for ( let i=0; i<arr.length; i++) {
+              arr[i] += 6;
+            }
+          }
+
+          //Check 4: If another JSON Object is found in the JSON object...
+          if (typeof val === 'object' && !Array.isArray(val)) {
+            //Recursively call the function to process nested JSON...
+            let transformedObj = {};
+            transformedObj = transformObject(val);
+            return transformedObj;
+          }
+
+          //Check 5: Return the Object if none of the above...
+          else {
+            return obj;
+          }
+        });
+        
+        console.log(obj);
+        return obj;
+      }
     </script>
   </head>
 

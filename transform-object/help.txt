@@ -1,0 +1,90 @@
+EXAMPLE CODES FROM BLACKBOX:
+
+CODE 1:
+function transformObject(obj) {
+    // Base case: if obj is a number, increment by 6
+    if (typeof obj === 'number') {
+        return obj + 6;
+    }
+    // Base case: if obj is a string, concatenate " BLARGH"
+    else if (typeof obj === 'string') {
+        return obj + " BLARGH";
+    }
+    // Recursive case: if obj is an array, transform each element
+    else if (Array.isArray(obj)) {
+        return obj.map(transformObject);
+    }
+    // Recursive case: if obj is an object, transform each property
+    else if (typeof obj === 'object') {
+        const transformedObj = {};
+        for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                transformedObj[key] = transformObject(obj[key]);
+            }
+        }
+        return transformedObj;
+    }
+    // If obj is neither number, string, array, nor object, return as is
+    else {
+        return obj;
+    }
+}
+
+// Example usage:
+const inputObject = {
+    a: 5,
+    b: "hello",
+    c: [1, 2, 3],
+    d: {
+        e: 10,
+        f: "world",
+        g: [4, 5, 6]
+    }
+};
+
+const transformedObject = transformObject(inputObject);
+console.log(transformedObject);
+
+
+
+CODE 2:
+function transformObject(obj) {
+    if (typeof obj === 'number') {
+        return obj + 6;
+    } else if (typeof obj === 'string') {
+        return obj + " BLARGH";
+    } else if (Array.isArray(obj)) {
+        return obj.map(transformObject);
+    } else if (typeof obj === 'object' && obj !== null) {
+        const transformedObj = {};
+        for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                transformedObj[key] = transformObject(obj[key]);
+            }
+        }
+        return transformedObj;
+    } else {
+        return obj;
+    }
+}
+
+// Example usage:
+const inputObject = {
+    a: 5,
+    b: "hello",
+    c: [1, 2, 3],
+    d: {
+        e: 10,
+        f: "world",
+        g: [4, 5, 6]
+    }
+};
+
+const transformedObject = transformObject(inputObject);
+console.log(transformedObject);
+
+
+
+LINKS REFERRED:
+- https://www.programiz.com/javascript/json
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof
