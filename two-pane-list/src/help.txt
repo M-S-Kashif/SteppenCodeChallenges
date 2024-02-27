@@ -1,0 +1,235 @@
+COPILOT CODE:
+
+// --------TwoPaneList.js-------
+import React, { useState } from "react";
+import SplitPane from "react-split-pane";
+import ListPane from "./ListPane";
+import DetailPane from "./DetailPane";
+
+function TwoPaneList({ data }) {
+  const [selectedItem, setSelectedItem] = useState(data[0]);
+
+  const handleSelectItem = (item) => {
+    setSelectedItem(item);
+  };
+
+  const handleResize = (size) => {
+    console.log("Pane size: " + size);
+  };
+
+  return (
+    <SplitPane
+      split="vertical"
+      minSize={100}
+      maxSize={400}
+      defaultSize={200}
+      onDragFinished={handleResize}
+    >
+      <ListPane data={data} onSelectItem={handleSelectItem} />
+      <DetailPane item={selectedItem} />
+    </SplitPane>
+  );
+}
+
+export default TwoPaneList;
+
+
+
+//-----------ListPane.js----------
+import React from "react";
+
+function ListPane({ data, onSelectItem }) {
+  return (
+    <div className="list-pane">
+      <ul>
+        {data.map((item) => (
+          <li key={item.id} onClick={() => onSelectItem(item)}>
+            {item.author}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default ListPane;
+
+//-----------DetailPane.js----------
+import React from "react";
+
+function DetailPane({ item }) {
+  return (
+    <div className="detail-pane">
+      <h1>{item.author}</h1>
+      <p>{item.description}</p>
+    </div>
+  );
+}
+
+export default DetailPane;
+
+//-------------index.css ------------
+.list-pane {
+  background-color: #f0f0f0;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.list-pane ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.list-pane li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.list-pane li:hover {
+  background-color: #e0e0e0;
+}
+
+.detail-pane {
+  background-color: #ffffff;
+  padding: 10px;
+}
+
+
+
+
+
+CHATGPT CODE:
+
+//----------TwoPaneLayout.jsx-----------
+import React, { useState } from 'react';
+import 'bulma/css/bulma.min.css';
+
+const TwoPaneLayout = ({ data }) => {
+  const [selectedTitle, setSelectedTitle] = useState(null);
+
+  return (
+    <div className="columns">
+      {/* Left Pane */}
+      <div className="column is-one-quarter">
+        <aside className="menu">
+          <p className="menu-label">Titles</p>
+          <ul className="menu-list">
+            {data.map((item, index) => (
+              <li key={index}>
+                <a
+                  className={selectedTitle === index ? 'is-active' : ''}
+                  onClick={() => setSelectedTitle(index)}
+                >
+                  {item.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      </div>
+
+      {/* Right Pane */}
+      <div className="column">
+        <div className="box">
+          <h2 className="title">Content</h2>
+          {selectedTitle !== null ? (
+            <div>
+              {data[selectedTitle].content.map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
+            </div>
+          ) : (
+            <p>Click on a title to view content.</p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default TwoPaneLayout;
+
+
+//-----------App.js-----------
+import React from 'react';
+import TwoPaneLayout from './TwoPaneLayout';
+
+const App = () => {
+  const data = [
+    {
+      title: 'Title 1',
+      content: ['Content 1-1', 'Content 1-2', 'Content 1-3'],
+    },
+    {
+      title: 'Title 2',
+      content: ['Content 2-1', 'Content 2-2', 'Content 2-3'],
+    },
+    // Add more data as needed
+  ];
+
+  return (
+    <div>
+      <TwoPaneLayout data={data} />
+    </div>
+  );
+};
+
+export default App;
+
+
+
+import React, { useState } from 'react';
+import 'bulma/css/bulma.min.css';
+
+const TwoPaneLayout = ({ data }) => {
+  const [selectedTitle, setSelectedTitle] = useState(null);
+
+  return (
+    <div className="columns">
+      {/* Left Pane */}
+      <div className="column is-one-quarter">
+        <aside className="menu">
+          <p className="menu-label">Titles</p>
+          <ul className="menu-list">
+            {data.map((item, index) => (
+              <li key={index}>
+                <a
+                  className={selectedTitle === index ? 'is-active' : ''}
+                  onClick={() => setSelectedTitle(index)}
+                >
+                  {item.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      </div>
+
+      {/* Right Pane */}
+      <div className="column">
+        <div className="box">
+          <h2 className="title">Content</h2>
+          {selectedTitle !== null ? (
+            <div>
+              {data[selectedTitle].content.map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
+            </div>
+          ) : (
+            <p className="has-text-grey-light">Click on a title to view content.</p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default TwoPaneLayout;
+
+CODE LINKS:
+https://www.youtube.com/watch?v=0riHps91AzE&t=1s
+https://react.dev/learn
+https://www.freecodecamp.org/news/learn-react-basics-in-10-minutes/
+https://react.dev/learn/thinking-in-react
+https://devhints.io/bulma
