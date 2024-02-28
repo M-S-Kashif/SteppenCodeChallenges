@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 CODE 1 FROM CHATGPT:
 
 import React, { useState } from 'react';
@@ -277,3 +278,284 @@ const TextList = () => {
 };
 
 export default TextList;
+=======
+CODE 1 FROM CHATGPT:
+
+import React, { useState } from 'react';
+
+const ListWithCRUD = () => {
+  const [items, setItems] = useState([]);
+  const [newItemText, setNewItemText] = useState('');
+  const [editingIndex, setEditingIndex] = useState(null);
+
+  const handleAddItem = () => {
+    if (newItemText.trim() !== '') {
+      setItems([...items, newItemText]);
+      setNewItemText('');
+    }
+  };
+
+  const handleDeleteItem = (index) => {
+    if (window.confirm('Are you sure you want to delete this item?')) {
+      setItems(items.filter((_, i) => i !== index));
+    }
+  };
+
+  const handleEditItem = (index) => {
+    setEditingIndex(index);
+  };
+
+  const handleSaveEdit = (index, updatedText) => {
+    const updatedItems = [...items];
+    updatedItems[index] = updatedText;
+    setItems(updatedItems);
+    setEditingIndex(null);
+  };
+
+  return (
+    <div className="container">
+      <div className="field">
+        <label className="label">Add Item</label>
+        <div className="control">
+          <input
+            type="text"
+            className="input"
+            value={newItemText}
+            onChange={(e) => setNewItemText(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleAddItem()}
+          />
+        </div>
+        <div className="control mt-2">
+          <button className="button is-primary" onClick={handleAddItem}>
+            Add
+          </button>
+        </div>
+      </div>
+
+      <ul className="mt-4">
+        {items.map((item, index) => (
+          <li
+            key={index}
+            className="is-flex is-justify-content-space-between mb-2"
+          >
+            {editingIndex === index ? (
+              <div className="field is-grouped">
+                <div className="control">
+                  <input
+                    type="text"
+                    className="input"
+                    value={item}
+                    onChange={(e) => handleSaveEdit(index, e.target.value)}
+                    onKeyDown={(e) =>
+                      e.key === 'Enter' && handleSaveEdit(index, item)
+                    }
+                  />
+                </div>
+              </div>
+            ) : (
+              <p className="is-flex-grow-1">{item}</p>
+            )}
+
+            <div className="field is-grouped">
+              {editingIndex !== index && (
+                <>
+                  <p className="control">
+                    <button
+                      className="button is-warning"
+                      onClick={() => handleEditItem(index)}
+                    >
+                      Edit
+                    </button>
+                  </p>
+                  <p className="control">
+                    <button
+                      className="button is-danger"
+                      onClick={() => handleDeleteItem(index)}
+                    >
+                      Delete
+                    </button>
+                  </p>
+                </>
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default ListWithCRUD;
+
+
+
+-----------------------------------------
+
+
+CODE 2 FROM CHATGPT:
+
+import React, { useState } from 'react';
+import 'bulma/css/bulma.min.css';
+
+const ListWithCRUD = () => {
+  const [items, setItems] = useState([]);
+  const [newItemText, setNewItemText] = useState('');
+  const [editingIndex, setEditingIndex] = useState(null);
+
+  const handleAddItem = () => {
+    if (newItemText.trim() !== '') {
+      setItems([...items, newItemText]);
+      setNewItemText('');
+    }
+  };
+
+  const handleDeleteItem = (index) => {
+    if (window.confirm('Are you sure you want to delete this item?')) {
+      setItems(items.filter((_, i) => i !== index));
+    }
+  };
+
+  const handleEditItem = (index) => {
+    setEditingIndex(index);
+  };
+
+  const handleSaveEdit = (index, updatedText) => {
+    const updatedItems = [...items];
+    updatedItems[index] = updatedText;
+    setItems(updatedItems);
+    setEditingIndex(null);
+  };
+
+  const renderTextBar = () => (
+    <li className="is-flex is-align-items-center">
+      <div className="field is-grouped">
+        <p className="control is-expanded">
+          <input
+            type="text"
+            className="input"
+            value={newItemText}
+            onChange={(e) => setNewItemText(e.target.value)}
+          />
+        </p>
+        <p className="control">
+          <button className="button is-primary" onClick={handleAddItem}>
+            Add
+          </button>
+        </p>
+      </div>
+    </li>
+  );
+
+  const renderListItem = (item, index) => (
+    <li
+      key={index}
+      className="is-flex is-align-items-center mb-2"
+      onMouseEnter={() => setHoveredIndex(index)}
+      onMouseLeave={() => setHoveredIndex(null)}
+    >
+      {editingIndex === index ? (
+        <div className="field is-grouped">
+          <div className="control">
+            <input
+              type="text"
+              className="input"
+              value={item}
+              onChange={(e) => handleSaveEdit(index, e.target.value)}
+              onKeyDown={(e) =>
+                e.key === 'Enter' && handleSaveEdit(index, item)
+              }
+            />
+          </div>
+        </div>
+      ) : (
+        <>
+          <p className="is-flex-grow-1">{item}</p>
+          {hoveredIndex === index && (
+            <div className="field is-grouped">
+              <p className="control">
+                <button
+                  className="button is-warning"
+                  onClick={() => handleEditItem(index)}
+                >
+                  Edit
+                </button>
+              </p>
+              <p className="control">
+                <button
+                  className="button is-danger"
+                  onClick={() => handleDeleteItem(index)}
+                >
+                  Delete
+                </button>
+              </p>
+            </div>
+          )}
+        </>
+      )}
+    </li>
+  );
+
+  return (
+    <div className="container">
+      <ul className="mt-4">
+        {items.map((item, index) => renderListItem(item, index))}
+        {renderTextBar()}
+      </ul>
+    </div>
+  );
+};
+
+export default ListWithCRUD;
+
+
+
+--------------------------------------------
+
+CODE 3: CHATGPT
+
+import React, { useState } from 'react';
+
+const TextList = () => {
+  const [items, setItems] = useState([]);
+  const [newItemText, setNewItemText] = useState('');
+
+  const handleAddItem = () => {
+    if (newItemText.trim() !== '') {
+      setItems([...items, newItemText]);
+      setNewItemText('');
+    }
+  };
+
+  const handleInputChange = (e) => {
+    setNewItemText(e.target.value);
+  };
+
+  const handleInputSubmit = (e) => {
+    e.preventDefault();
+    handleAddItem();
+  };
+
+  return (
+    <div>
+      <ul>
+        {items.map((item, index) => (
+          <li key={index}>
+            <p>{item}</p>
+          </li>
+        ))}
+      </ul>
+      <form onSubmit={handleInputSubmit}>
+        <input
+          type="text"
+          value={newItemText}
+          onChange={handleInputChange}
+          placeholder="Enter text"
+        />
+        <button type="submit">Add</button>
+      </form>
+    </div>
+  );
+};
+
+export default TextList;
+>>>>>>> Stashed changes

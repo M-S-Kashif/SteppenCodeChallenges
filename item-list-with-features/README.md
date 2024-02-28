@@ -1,4 +1,4 @@
-# Item List with Add, Edit and Remove - Intermediate React
+# Two-Pane List with Detail - Basic React
 
 Write a react component.
 

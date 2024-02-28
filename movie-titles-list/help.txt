@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 function getovieList(year) {
   // Replace this URL with the actual API endpoint for movie data
   const apiUrl = `https://api.example.com/movies?year=${year}`;
@@ -62,3 +63,69 @@ try {
     throw error;
   }
 }
+=======
+function getovieList(year) {
+  // Replace this URL with the actual API endpoint for movie data
+  const apiUrl = `https://api.example.com/movies?year=${year}`;
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await fetch(apiUrl);
+
+      if (!response.ok) {
+        throw new Error(`Error fetching data from the API. Status code: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const movieTitles = data.results.map(movie => movie.title);
+      const sortedMovieTitles = movieTitles.sort();
+
+      resolve(sortedMovieTitles);
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
+
+
+
+
+function fetchMovies() {
+  return fetch('https://api.example.com/movies')
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then((data) => {
+      // Process the movie data
+      console.log(data);
+    })
+    .catch((error) => {
+      console.error('Error fetching movie data:', error);
+    });
+}
+
+
+
+ -----------------------------------------------
+
+try {
+    const response = await fetch(endpoint);
+    const data = await response.json();
+
+    if (data.data && data.data.length > 0) {
+      // Extract titles and sort alphabetically
+      const titles = data.data.map(movie => movie.Title).sort();
+      return titles;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+}
+>>>>>>> Stashed changes
