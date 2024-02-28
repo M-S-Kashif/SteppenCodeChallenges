@@ -44,29 +44,21 @@ function fetchMovies() {
 
 
 
-      const getMovieList = (year) => {
-          // Use this API with the above arguement to get the list of movies...
-          const  url = `http://jsonmock.hackerrank.com/api/movies?year=${year}`; 
+ -----------------------------------------------
 
-          //console.log(url);
-          //Fetching this Api and seeing the result on console...
-          return new Promise( async (resolve, reject) => {
-            try {
-              const response = await fetch(url);
+try {
+    const response = await fetch(endpoint);
+    const data = await response.json();
 
-              if (!response.ok){
-                throw new Error(`Error Fetching the Api. Status Code ${response.status}`);
-              }
-
-              const data = await response.json();
-              const movieTitles = data.results.map(movie => movie.title);
-              const sortedMovieTitles = movieTitles.sort();
-
-              resolve(sortedMovieTitles);
-            }
-            catch(error){
-              reject(error);
-            }
-
-          });
-      }
+    if (data.data && data.data.length > 0) {
+      // Extract titles and sort alphabetically
+      const titles = data.data.map(movie => movie.Title).sort();
+      return titles;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+}
